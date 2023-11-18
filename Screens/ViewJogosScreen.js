@@ -26,7 +26,7 @@ function ViewJogosScreen({ route }) {
 
   try { 
 
-    const response = await axios.get(`https://www.freetogame.com/api/game?id=${id}`);  
+    const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`);  
 
    setJogo(response.data); 
 

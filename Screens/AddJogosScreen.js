@@ -18,7 +18,7 @@ function AddJogosScreen({ navigation }) {
     
       try { 
     
-       await axios.post('https://www.freetogame.com/api/games', { title, thumbnail, status, short_description }); 
+       await axios.post('https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games', { title, thumbnail, status, short_description }); 
     
        navigation.goBack(); 
     

@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
 
   try { 
 
-   const response = await axios.get('https://www.freetogame.com/api/games'); 
+   const response = await axios.get('https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games'); 
 
    setJogos(response.data); 
 
@@ -82,7 +82,7 @@ function HomeScreen({ navigation }) {
 
        onPress={async () => { 
 
-        await axios.delete(`https://www.freetogame.com/api/game?id=${item.id}`); 
+        await axios.delete(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${item.id}`); 
 
         fetchJogos(); 
 

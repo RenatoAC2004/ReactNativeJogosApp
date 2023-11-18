@@ -29,7 +29,7 @@ function EditJogosScreen({ route, navigation }) {
 
   try { 
 
-   const response = await axios.get(`https://www.freetogame.com/api/game?id=${id}`); 
+   const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`); 
 
    const jogo = response.data; 
 
@@ -55,7 +55,7 @@ function EditJogosScreen({ route, navigation }) {
 
   try { 
 
-   await axios.put(`https://www.freetogame.com/api/game?id=${id}`, { title, thumbnail, status, short_description }); 
+   await axios.put(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`, { title, thumbnail, status, short_description }); 
 
    navigation.goBack(); 
 
