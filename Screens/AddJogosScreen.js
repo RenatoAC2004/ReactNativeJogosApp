@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; 
 
-import { View, TextInput, Button } from 'react-native'; 
+import { View, TextInput, Button, StyleSheet } from 'react-native'; 
 
 import axios from 'axios'; 
 
@@ -32,15 +32,15 @@ function AddJogosScreen({ navigation }) {
 
       return ( 
 
-          <View> 
+          <View style={styles.container}> 
         
-        <TextInput placeholder="Título" value={title} onChangeText={setTitle} /> 
+        <TextInput style={styles.input} placeholder="Título" value={title} onChangeText={setTitle} /> 
  
-        <TextInput placeholder="Thumbnail" value={thumbnail} onChangeText={setThumbnail} /> 
+        <TextInput style={styles.input} placeholder="Thumbnail" value={thumbnail} onChangeText={setThumbnail} /> 
 
-        <TextInput placeholder="Status" value={status} onChangeText={setStatus} /> 
+        <TextInput style={styles.input} placeholder="Status" value={status} onChangeText={setStatus} /> 
         
-        <TextInput placeholder="Descrição" value={short_description} onChangeText={setSDescription} /> 
+        <TextInput style={styles.input} placeholder="Descrição" value={short_description} onChangeText={setSDescription} /> 
         
            <Button title="Adicionar" onPress={addJogo} /> 
         
@@ -49,5 +49,21 @@ function AddJogosScreen({ navigation }) {
          ); 
         
         } 
+
+        const styles = StyleSheet.create({
+            container: {
+              flex: 1,
+              alignItems: 'center',
+              padding: 20,
+            },
+            input: {
+              width: '100%',
+              marginBottom: 10,
+              padding: 10,
+              borderWidth: 1,
+              borderColor: '#ccc',
+              borderRadius: 5,
+            },
+          });
 
     export default AddJogosScreen; 

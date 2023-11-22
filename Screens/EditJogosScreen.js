@@ -1,93 +1,83 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
+import axios from 'axios';
 
-import { View, TextInput, Button } from 'react-native'; 
-
-import axios from 'axios'; 
-
- 
-
-function EditJogosScreen({ route, navigation }) { 
-
-    const { id } = route.params;
-
-    const [title, setTitle] = useState(''); 
+function EditJogosScreen({ route, navigation }) {
    
-    const [thumbnail, setThumbnail] = useState(''); 
-   
-    const [status, setStatus] = useState('');  
+  const { id } = route.params;
+  const [title, setTitle] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
+  const [status, setStatus] = useState('');
+  const [short_description, setSDescription] = useState('');
 
-    const [short_description, setSDescription] = useState(''); 
+  useEffect(() => {
 
+    fetchJogo();
 
- useEffect(() => { 
+  }, []);
 
-  fetchJogo(); 
+  const fetchJogo = async () => {
+    try {
+      const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`);
+      const jogo = response.data;
 
- }, []); 
+      setTitle(jogo.title);
 
- const fetchJogo = async () => { 
+      setThumbnail(jogo.thumbnail);
 
-  try { 
+      setStatus(jogo.status);
 
-   const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`); 
+      setSDescription(jogo.short_description);
 
-   const jogo = response.data; 
+    } catch (error) {
 
-   setTitle(jogo.title); 
+      console.error("Erro ao buscar jogo:", error);
+    }
+  };
 
-   setThumbnail(jogo.thumbnail); 
+  const editJogo = async () => {
+    try {
 
-   setStatus(jogo.status);
-   
-   setSDescription(jogo.short_description)
+      await axios.put(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`, { title, thumbnail, status, short_description });
+      navigation.goBack();
 
-  } catch (error) { 
+    } catch (error) {
 
-   console.error("Erro ao buscar jogo:", error); 
+      console.error("Erro ao editar jogo:", error);
 
-  } 
+    }
+  };
 
- }; 
+  return (
+    <View style={styles.container}>
+      <TextInput style={styles.input} placeholder="Título" value={title} onChangeText={setTitle} />
 
- 
+      <TextInput style={styles.input} placeholder="Thumbnail" value={thumbnail} onChangeText={setThumbnail} />
 
- const editJogo = async () => { 
+      <TextInput style={styles.input} placeholder="Status" value={status} onChangeText={setStatus} />
 
-  try { 
+      <TextInput style={styles.input} placeholder="Descrição" value={short_description} onChangeText={setSDescription} />
 
-   await axios.put(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`, { title, thumbnail, status, short_description }); 
+      <Button title="Editar" onPress={editJogo} />
+    </View>
+  );
+}
 
-   navigation.goBack(); 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+  },
+  input: {
+    width: '100%',
+    marginBottom: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+});
 
-  } catch (error) { 
-
-   console.error("Erro ao editar jogo:", error); 
-
-  } 
-
- }; 
-
- 
-
- return ( 
-
-    <View> 
-        
-    <TextInput placeholder="Título" value={title} onChangeText={setTitle} /> 
- 
-    <TextInput placeholder="Thumbnail" value={thumbnail} onChangeText={setThumbnail} /> 
- 
-    <TextInput placeholder="Status" value={status} onChangeText={setStatus} /> 
-    
-    <TextInput placeholder="Descrição" value={short_description} onChangeText={setSDescription} /> 
- 
-    <Button title="Editar" onPress={editJogo} /> 
- 
-   </View> 
-
- ); 
-
-} 
-
- 
 export default EditJogosScreen;

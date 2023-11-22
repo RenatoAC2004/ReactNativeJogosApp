@@ -1,73 +1,67 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import axios from 'axios';
 
-import { View, Text, Image } from 'react-native'; 
+function ViewJogosScreen({ route }) {
+  const { id } = route.params;
+  const [jogo, setJogo] = useState(null);
 
-import axios from 'axios'; 
+  useEffect(() => {
+    fetchJogo();
+  }, []);
 
- 
+  const fetchJogo = async () => {
+    try {
+      const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`);
+      setJogo(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar jogo:", error);
+    }
+  };
 
-function ViewJogosScreen({ route }) { 
+  return (
+    <View style={styles.container}>
+      {jogo && (
+        <View style={styles.content}>
 
- const { id } = route.params; 
+          <Text style={styles.title}>{jogo.title}</Text>
 
- const [jogo, setJogo] = useState(null); 
+          <Image source={{ uri: jogo.thumbnail }} style={styles.thumbnail} />
 
- 
+          <Text>Status: {jogo.status}</Text>
 
- useEffect(() => { 
+          <Text>{jogo.short_description}</Text>
+          
+        </View>
+      )}
+    </View>
+  );
+}
 
-  fetchJogo(); 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  content: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  thumbnail: {
+    width: 200,
+    height: 200,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+});
 
- }, []); 
-
- 
-
- const fetchJogo = async () => { 
-
-  try { 
-
-    const response = await axios.get(`https://web-8kwuwc3y8ogc.up-es-mad1-1.apps.run-on-seenode.com/games/${id}`);  
-
-   setJogo(response.data); 
-
-  } catch (error) { 
-
-   console.error("Erro ao buscar jogo:", error); 
-
-  } 
-
- }; 
-
- 
-
- return ( 
-
-  <View> 
-
-   {jogo && ( 
-
-    <> 
-
-     <Text>{jogo.title}</Text> 
-
-     <Image source={{ uri: jogo.thumbnail }} style={{ width: 100, height: 100 }} /> 
-
-     <Text>{jogo.status}</Text> 
-
-     <Text>{jogo.short_description}</Text> 
-
-    </> 
-
-   )} 
-
-  </View> 
-
- ); 
-
-} 
-
- 
-
-export default ViewJogosScreen; 
-
- 
+export default ViewJogosScreen;
